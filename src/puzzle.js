@@ -1,8 +1,9 @@
 
 const SIZE = 3; // Size of the puzzle grid (3x3)
 const EMPTY_TILE = 0;
+const SCRAMBLE_AMOUNT = 100;
 
-export function isSolved(state){
+export function isSolved(state) {
   const flatState = state.flat();
   for (let i = 0; i < flatState.length - 1; i++) {
     if (flatState[i] !== i + 1) {
@@ -12,7 +13,7 @@ export function isSolved(state){
   return true;
 }
 
-export function makeMove(state, move){
+export function makeMove(state, move) {
   const flatState = state.flat();
   const emptyIndex = flatState.indexOf(EMPTY_TILE);
   const moveIndex = flatState.indexOf(move);
@@ -26,7 +27,7 @@ export function makeMove(state, move){
   return newState;
 }
 
-export function isValidMove(state, move){
+export function isValidMove(state, move) {
   const flatState = state.flat();
   const emptyIndex = flatState.indexOf(EMPTY_TILE);
   const moveIndex = flatState.indexOf(move);
@@ -40,31 +41,26 @@ export function isValidMove(state, move){
   return Math.floor(moveIndex / SIZE) === Math.floor(emptyIndex / SIZE) || moveIndex % SIZE === emptyIndex % SIZE;
 }
 
-export function generateRandomState(){
-  let numbers = [...Array(SIZE * SIZE).keys()]; // 0 to 8
-  numbers = shuffleArray(numbers);
-  const state = [];
+export function generateRandomState() {
+  const startState = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 0]
+  ]
 
-  for (let i = 0; i < SIZE; i++) {
-    const row = [];
-    for (let j = 0; j < SIZE; j++) {
-      row.push(numbers[i * SIZE + j]);
-    }
-    state.push(row);
+  let state = startState;
+  const moveAmount = 1 + Math.floor(Math.random() * SCRAMBLE_AMOUNT - 1);
+  for (let i = 0; i < moveAmount; i++) {
+    const validMoves = [1, 2, 3, 4, 5, 6, 7, 8].filter((move) => isValidMove(state, move));
+    const randomMove = validMoves[Math.floor(Math.random() * validMoves.length)];
+    state = makeMove(state, randomMove);
   }
-
   return state;
 }
 
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
 
-export function formatedState(state){
+
+export function formatedState(state) {
   return [
     state[0].join('|').replace(/0/g, ' '),
     state[1].join('|').replace(/0/g, ' '),
@@ -72,7 +68,7 @@ export function formatedState(state){
   ];
 }
 
-export function createEasyGame(){
+export function createEasyGame() {
   return [
     [1, 2, 3],
     [4, 5, 6],

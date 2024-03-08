@@ -53,6 +53,7 @@ app.post('/move', async (req, res) => {
         if (gameSession.status === 'solved') {
             return res.status(400).json({
                 error: 'Game already solved',
+                status: gameSession.status,
                 totalMoves: gameSession.moveHistory.length,
                 formatedState: formatedState(gameSession.state),
                 state: gameSession.state,
@@ -62,6 +63,7 @@ app.post('/move', async (req, res) => {
         if (typeof move !== 'number' || move < 1 || move > 9) {
             return res.status(400).json({
                 error: 'Invalid move',
+                status: gameSession.status,
                 validMoves: [1, 2, 3, 4, 5, 6, 7, 8, 9].filter((move) => isValidMove(oldState, move)),
                 formatedState: formatedState(oldState),
                 state: oldState,
@@ -76,6 +78,7 @@ app.post('/move', async (req, res) => {
         if (!isValidMove(oldState, move)) {
             return res.status(400).json({
                 error: 'Invalid move',
+                status: gameSession.status,
                 validMoves: [1, 2, 3, 4, 5, 6, 7, 8, 9].filter((move) => isValidMove(oldState, move)),
                 formatedState: formatedState(oldState),
                 state: oldState,
@@ -91,6 +94,7 @@ app.post('/move', async (req, res) => {
             await gameSession.save();
             return res.json({
                 message: 'Congratulations! Puzzle solved!',
+                status: gameSession.status,
                 totalMoves: gameSession.moveHistory.length,
                 formatedState: formatedState(newState),
                 newState
@@ -99,6 +103,8 @@ app.post('/move', async (req, res) => {
 
         await gameSession.save();
         res.json({
+            message: 'Move successful',
+            status: gameSession.status,
             totalMoves: gameSession.moveHistory.length,
             formatedState: formatedState(newState),
             newState
