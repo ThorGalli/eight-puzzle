@@ -3,9 +3,13 @@ import GameSession from './model/gameSession.js';
 import { generateRandomState, isValidMove, isSolved, makeMove, formatedState, createEasyGame } from './puzzle.js';
 
 const app = express();
-const port = 3001;
+const port = 8080;
 
 app.use(json());
+
+app.get('/', (req, res) => {
+    res.json({ message: 'Welcome to the 8-puzzle API' });
+});
 
 app.post('/start', async (req, res) => {
     const { password, easy } = req.body;
