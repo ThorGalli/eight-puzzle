@@ -1,9 +1,10 @@
 import express, { json } from 'express';
 import GameSession from './model/gameSession.js';
 import { generateRandomState, isValidMove, isSolved, makeMove, formatedState, createEasyGame } from './puzzle.js';
+import 'dotenv/config'
 
 const app = express();
-const port = 8000;
+const port = process.env.PORT || 3000
 
 app.use(json());
 
