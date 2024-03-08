@@ -1,6 +1,9 @@
-To run this project locally:
+# Description
+This is the famous eight-puzzle game made is javascript, using express, sequelize and sqlite
 
-```bash
+# To run this project locally:
+
+```
 npm install
 
 # then
@@ -12,8 +15,7 @@ npm start
 # Use these routes to play the game:
 
 ### To Start the Game
-```bash
-# To start the game
+```
 POST localhost:3001/start
 # Body Example
 {
@@ -47,9 +49,8 @@ POST localhost:3001/start
 	]
 }
 ```
-### To Move
-```bash
-# Use the GameSession ID and your password to move
+### To Move, use the GameSession ID and your password to move
+```
 POST localhost:3001/move
 # Body Example
 {
@@ -87,7 +88,7 @@ POST localhost:3001/move
 }
 ```
 ### To get game data
-```bash
+```
 GET localhost:3001/allSessions
 
 # Return Example:
