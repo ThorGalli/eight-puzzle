@@ -3,7 +3,7 @@ import GameSession from './model/gameSession.js';
 import { generateRandomState, isValidMove, isSolved, makeMove, formatedState, createEasyGame } from './puzzle.js';
 
 const app = express();
-const port = 8080;
+const port = 8000;
 
 app.use(json());
 
