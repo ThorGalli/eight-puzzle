@@ -6,11 +6,46 @@ import 'dotenv/config'
 const app = express();
 const port = process.env.PORT || 3000
 
+const howToPlay = {
+    title: 'Welcome to the 8-puzzle API',
+    message: 'To play this game use the following endpoints in Insomnia Postman',
+    endpoints: [
+        {
+            path: '/start',
+            method: 'POST',
+            description: 'Start a new game session',
+            body: {
+                password: 'string',
+            }
+        },
+        {
+            path: '/move',
+            method: 'POST',
+            description: 'Make a move on a game session',
+            body: {
+                id: 'number',
+                password: 'string',
+                move: 'number'
+            }
+        },
+        {
+            path: '/status/:sessionId',
+            method: 'GET',
+            description: 'Get the current state of a game session'
+        }
+    ]
+}
 app.use(json());
 
 app.get('/', (req, res) => {
-    res.json({ message: 'Welcome to the 8-puzzle API' });
+    res.json(howToPlay);
 });
+
+app.get('/start', (req, res) => {
+    res.json(howToPlay);
+});
+
+
 
 app.post('/start', async (req, res) => {
     const { password, easy } = req.body;
