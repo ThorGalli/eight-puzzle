@@ -9,6 +9,7 @@ const port = process.env.PORT || 3000
 const howToPlay = {
     title: 'Welcome to the 8-puzzle API',
     message: 'To play this game use the following endpoints in Insomnia Postman',
+    obs: 'Use the generated ID and the chosen PASSWORD to make moves',
     endpoints: [
         {
             path: '/start',
